@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>E-Workbook</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+      <link href="02.Student/Login/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="css/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/agency.css" rel="stylesheet">
+<!-- FAVICON -->
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+      
+      <link rel="stylesheet" type="text/css" href="Student/Login/vendor/bootstrap/css/bootstrap.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="Student/Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->                     
+	<link rel="stylesheet" type="text/css" href="Student/Login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="Student/Login/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="Student/Login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="Student/Login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="Student/Login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="Student/Login/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="Student/Login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="Student/Login/css/main.css">
+      
+      <style>
+      
+          h5
+          {
+              color:red;
+          }
+          
+          .btn-default
+          {
+              background-color: black;
+              border: none;
+              color: white;
+              padding: 15px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 10px;
+              margin: 4px 2px;
+              cursor: pointer;
+              border-radius: 100%;
+              left: 50%;
+            width: 70px;
+            height: 70px;
+          }
+          
+    input[type=text], input[type=password] { 
+    width: 100%; 
+    padding: 12px 20px; 
+    margin: 8px 0; 
+    display: inline-block; 
+    border: 1px solid #ccc; 
+    box-sizing: border-box; 
+} 
+  
+@media screen and (max-width: 300px) { 
+    .cancelbtn, .signupbtn { 
+       width: 100%; 
+    } 
+}
+</style>
+</head>
+
+  <body id="page-top">  
+    <!-- Modal -->
+                    <div id="myModal1" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="limiter">
+		                          <div class="container-login100">
+							<h5>Oops! Something went wrong..Please try again!</h5>
+			                         <div class="wrap-login100">
+				                            <form class="login100-form validate-form" action="login.jsp">
+				                                <span class="login100-form-title p-b-43">
+						                          Login to continue
+					                           </span>
+					
+					
+                                                <div class="wrap-input100 validate-input">
+						                              <input class="input100" type="text" name="user">
+						                               <span class="focus-input100"></span>
+						                               <span class="label-input100">ID</span>
+					                           </div>
+										      <div class="wrap-input100 validate-input" data-validate="Password is required">
+						                          <input class="input100" type="password" name="pass">
+						                              <span class="focus-input100"></span>
+                                                        <span class="label-input100">Password</span>
+                                                        <span class="label-input100"></span>
+                                                            </div>
+                                                    
+                                                    <div class="flex-sb-m w-full p-t-3 p-b-32">
+                                                        <div class="contact100-form-checkbox">
+                                                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                                            <label class="label-checkbox100" for="ckb1">
+                                                                Remember me
+                                                            </label>
+                                                        </div>
+
+                                                        <div>
+                                                            <a href="#" class="txt1">
+                                                                Forgot Password?
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="container-login100-form-btn">
+                                                        <button class="login100-form-btn">
+                                                            Login
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">E-Workbook</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="" data-toggle="modal" data-target="#myModal1">Login</a>
+                
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+        <div class="intro-text">
+          <div class="intro-lead-in">Welcome To Our Software!</div>
+          <div class="intro-heading text-uppercase">It's Nice To Meet You</div>
+    
+        </div>
+      </div>
+            
+    </header>
+
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="css/vendor/jquery/jquery.min.js"></script>
+    <script src="css/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="css/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/agency.min.js"></script>
+
+      <!--student login scripst-->
+      <script src="Student/Login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="Student/Login/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="Student/Login/vendor/bootstrap/js/popper.js"></script>
+	<script src="Student/Login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="Student/Login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="Student/Login/vendor/daterangepicker/moment.min.js"></script>
+	<script src="Student/Login/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="Student/Login/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="Student/Login/js/main.js"></script
+  </body>
+
+</html>

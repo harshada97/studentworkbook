@@ -1,0 +1,45 @@
+-------------------------------------------------------------------------------------------------------------------------------
+Admin:
+-------------------------------------------------------------------------------------------------------------------------------
+	1. Create student and teacher accounts. Add data in students/teachers table and user table at the time of creation from excel file.
+	2. Disable accounts. Make IsActive = false.
+	3. Manage class, division, batches.
+		- Create class
+		- Create division
+		- Link division to classes
+		- Create batches
+		- Link batches to class and divisions
+		- For adding students in batch will get list of students in the class and division related with batch
+		- Select range of students to be added to batch or can have checkboxes
+		- Add students to batches
+	4. Manage subjects, topics, assignments.
+		- Create subjects
+		- Link subject with class
+		- Create topics
+		- Link topics with subjects
+		- Create assignment and link with topics(Maybe from excel with the required fields in AssignmentMaster)
+	5. Update anything from Master Tables(Keep on hold because need to think what are the possibilities if anything is changed. Think on it.)
+	6. Create remarks.
+	
+-------------------------------------------------------------------------------------------------------------------------------
+Teacher:
+--------------------------------------------------------------------------------------------------------------------------------
+	Teachers can teach multiple subjects. Hence can be associated with multiple batches.
+	
+	1. See batch list.
+	2. Select batch from the list. When batch is selected the assignments allocated to the batch should be shown sorted on basis of AssignedDate. There will be a button 'View submissions' which will give the list from StudentAssignment table for AssignmentID and BatchID (BatchID will be fetched on basis of memberID).
+	3. Teacher can give remarks. Remark can be given only once.
+	4. From (2), when batch is selected teacher can give assignment to the batch. There will be a button on top corner saying 'Give assignment'.
+	5. Teacher can see list of topics associated with the batch. There will be a button 'View assignments' in front of every topic.
+	6. Clicking 'View assignments' will show list of assignments in that topic which are not yet assigned to the batch. There will be a button 'Assign' which will assign the assignment to the batch and make entry in AssignmentBatch table.
+	
+--------------------------------------------------------------------------------------------------------------------------------
+NOTE: PLEASE ALTER THE FLOW IF NEEDED AND RAISE THE VERSION OF DOCUMENT AND SEND BACK.
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+--------------------------******-------------------------------
+
+Display Admin profile information

@@ -1,0 +1,327 @@
+member
+
+create table Member(memberID varchar(20) primary key,username varchar(20) UNIQUE,password varchar(20) NOT NULL,createddate date,lastLogin date,isModified boolean DEFAULT FALSE,modifedDate date NULL,isActive boolean DEFAULT TRUE,validity bigint);
+CREATE TABLE
+
+postgres=# \d member
+                Table "public.member"
+   Column    |         Type          |   Modifiers   
+-------------+-----------------------+---------------
+ memberid    | character varying(20) | not null
+ username    | character varying(20) | 
+ password    | character varying(20) | not null
+ createddate | date                  | 
+ lastlogin   | date                  | 
+ ismodified  | boolean               | default false
+ modifeddate | date                  | 
+ isactive    | boolean               | default true
+ validity    | bigint                | 
+Indexes:
+    "member_pkey" PRIMARY KEY, btree (memberid)
+    "member_username_key" UNIQUE CONSTRAINT, btree (username)
+
+
+postgres=# select * from member;
+ memberid | username | password | createddate | lastlogin  | ismodified | modifeddate | isactive |     validity      
+----------+----------+----------+-------------+------------+------------+-------------+----------+-------------------
+ 1        | abc      | abc@1999 | 2019-01-15  | 2019-01-15 | t          | 2019-01-15  | t        | 12449995898684765
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+ClassMaster
+
+postgres=# create table ClassMaster(classID varchar(20) primary key,className char(20) NOT NULL);
+CREATE TABLE
+
+postgres=# \d ClassMaster
+          Table "public.classmaster"
+  Column   |         Type          | Modifiers 
+-----------+-----------------------+-----------
+ classid   | character varying(20) | not null
+ classname | character(20)         | not null
+Indexes:
+    "classmaster_pkey" PRIMARY KEY, btree (classid)
+
+postgres=# insert into classmaster values('1111','ty1');
+INSERT 0 1
+
+postgres=# select * from classmaster;
+ classid |      classname       
+---------+----------------------
+ 1111    | ty1                 
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+DivisionMaster
+
+postgres=# create table DivisionMaster(divisionID varchar(20) primary key,divisionName varchar(20) NOT NULL);
+CREATE TABLE
+
+postgres=# \d DivisionMaster
+          Table "public.divisionmaster"
+    Column    |         Type          | Modifiers 
+--------------+-----------------------+-----------
+ divisionid   | character varying(20) | not null
+ divisionname | character varying(20) | not null
+Indexes:
+    "divisionmaster_pkey" PRIMARY KEY, btree (divisionid)
+
+postgres=# insert into divisionmaster values('123A','A');
+INSERT 0 1
+
+postgres=# select * from divisionmaster;
+ divisionid | divisionname 
+------------+--------------
+ 123A       | A
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+BatchMaster
+
+postgres=# create table BatchMaster(batchID varchar(20) primary key,batchNumber int NOT NULL,batchName varchar(20),classID varchar(20) references ClassMaster(classID) on delete cascade,divisionID varchar(20) references DivisionMaster(divisionID) on delete cascade);
+CREATE TABLE
+
+postgres=# \d BatchMaster
+           Table "public.batchmaster"
+   Column    |         Type          | Modifiers 
+-------------+-----------------------+-----------
+ batchid     | character varying(20) | not null
+ batchnumber | integer               | not null
+ batchname   | character varying(20) | 
+ classid     | character varying(20) | 
+ divisionid  | character varying(20) | 
+Indexes:
+    "batchmaster_pkey" PRIMARY KEY, btree (batchid)
+Foreign-key constraints:
+    "batchmaster_classid_fkey" FOREIGN KEY (classid) REFERENCES classmaster(classid) ON DELETE CASCADE
+    "batchmaster_divisionid_fkey" FOREIGN KEY (divisionid) REFERENCES divisionmaster(divisionid) ON DELETE CASCADE
+
+postgres=# select * from batchmaster;
+ batchid | batchnumber | batchname | classid | divisionid 
+---------+-------------+-----------+---------+------------
+ A101    |           1 | pqr       | 1111    | 123A
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+Student
+
+postgres=# create table Student(memberID varchar(20) references member(memberID) on delete cascade,rollNo int NOT NULL,studentName char(40) NOT NULL,birthDate date NULL,phoneNo varchar(11) NULL,batchID varchar(20) references BatchMaster(batchID)  on delete cascade);
+CREATE TABLE
+
+postgres=# \d Student;
+             Table "public.student"
+   Column    |         Type          | Modifiers 
+-------------+-----------------------+-----------
+ memberid    | character varying(20) | 
+ rollno      | integer               | not null
+ studentname | character(40)         | not null
+ birthdate   | date                  | 
+ phoneno     | character varying(11) | 
+ batchid     | character varying(20) | 
+Foreign-key constraints:
+    "student_batchid_fkey" FOREIGN KEY (batchid) REFERENCES batchmaster(batchid) ON DELETE CASCADE
+    "student_memberid_fkey" FOREIGN KEY (memberid) REFERENCES member(memberid) ON DELETE CASCADE
+
+postgres=# insert into student values('1',309,'xyz sdf','2/12/2019','9878739123','A101');
+INSERT 0 1
+
+postgres=# select * from student;
+ memberid | rollno |               studentname                | birthdate  |  phoneno   | batchid 
+----------+--------+------------------------------------------+------------+------------+---------
+ 1        |    309 | xyz sdf                                  | 2019-02-12 | 9878739123 | A101
+(1 row)
+
+postgres=# alter table student add column classid varchar(20) references classmaster(classid) on delete cascade;
+ALTER TABLE
+postgres=# \d student
+             Table "public.student"
+   Column    |         Type          | Modifiers 
+-------------+-----------------------+-----------
+ memberid    | character varying(20) | 
+ rollno      | integer               | not null
+ studentname | character(40)         | not null
+ birthdate   | date                  | 
+ phoneno     | character varying(11) | 
+ batchid     | character varying(20) | 
+ classid     | character varying(20) | 
+Foreign-key constraints:
+    "student_batchid_fkey" FOREIGN KEY (batchid) REFERENCES batchmaster(batchid) ON DELETE CASCADE
+    "student_classid_fkey" FOREIGN KEY (classid) REFERENCES classmaster(classid) ON DELETE CASCADE
+    "student_memberid_fkey" FOREIGN KEY (memberid) REFERENCES member(memberid) ON DELETE CASCADE
+
+postgres=# update student set classid='1111' where memberid='1';
+UPDATE 1
+
+ memberid | rollno |               studentname                | birthdate  |  phoneno   | batchid | classid 
+----------+--------+------------------------------------------+------------+------------+---------+---------
+ 1        |    309 | xyz sdf                                  | 2019-02-12 | 9878739123 | A101    | 1111
+(1 row)
+
+
+_______________________________________________________________________________________________________________________________________________
+
+SubjectMaster
+
+postgres=# create table SubjectMaster(subjectID varchar(20) primary key,subjectName char(20) NOT NULL);
+CREATE TABLE
+
+postgres=# \d SubjectMaster
+          Table "public.subjectmaster"
+   Column    |         Type          | Modifiers 
+-------------+-----------------------+-----------
+ subjectid   | character varying(20) | not null
+ subjectname | character(20)         | not null
+Indexes:
+    "subjectmaster_pkey" PRIMARY KEY, btree (subjectid)
+
+postgres=# insert into subjectmaster values('CS22101','CC');
+INSERT 0 1
+
+postgres=# select * from subjectmaster;
+ subjectid |     subjectname      
+-----------+----------------------
+ CS22101   | CC                  
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+TopicMaster
+
+postgres=# create table TopicMaster(topicID varchar(20) primary key,topicName char(20) NOT NULL,subjectID varchar(20) references SubjectMaster(subjectID) on delete cascade);
+CREATE TABLE
+
+postgres=# \d TopicMaster;
+          Table "public.topicmaster"
+  Column   |         Type          | Modifiers 
+-----------+-----------------------+-----------
+ topicid   | character varying(20) | not null
+ topicname | character(20)         | not null
+ subjectid | character varying(20) | 
+Indexes:
+    "topicmaster_pkey" PRIMARY KEY, btree (topicid)
+Foreign-key constraints:
+    "topicmaster_subjectid_fkey" FOREIGN KEY (subjectid) REFERENCES subjectmaster(subjectid) ON DELETE CASCADE
+
+postgres=# insert into topicmaster values('T456','LL(1)','CS22101');
+INSERT 0 1
+
+postgres=# select * from topicmaster;
+ topicid |      topicname       | subjectid 
+---------+----------------------+-----------
+ T456    | LL(1)                | CS22101
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+ClassSubject
+
+postgres=# create table ClassSubject(classID varchar(20) references classmaster(classid) on delete cascade,subjectID varchar(20) references subjectmaster(subjectid) on delete cascade);
+CREATE TABLE
+
+postgres=# \d classsubject
+          Table "public.classsubject"
+  Column   |         Type          | Modifiers 
+-----------+-----------------------+-----------
+ classid   | character varying(20) | 
+ subjectid | character varying(20) | 
+Foreign-key constraints:
+    "classsubject_classid_fkey" FOREIGN KEY (classid) REFERENCES classmaster(classid) ON DELETE CASCADE
+    "classsubject_subjectid_fkey" FOREIGN KEY (subjectid) REFERENCES subjectmaster(subjectid) ON DELETE CASCADE
+
+postgres=# insert into classsubject  values('1111','CS22101');
+INSERT 0 1
+
+postgres=# select * from classsubject;
+ classid | subjectid 
+---------+-----------
+ 1111    | CS22101
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+AssignmentMaster
+
+postgres=# create table AssignmentMaster(assignmentID varchar(20) primary key,assignmentName char(50) NOT NULL,topicID varchar(20) references topicmaster(topicid) on delete cascade,question varchar(100) NOT NULL);
+CREATE TABLE
+
+postgres=# \d assignmentmaster
+           Table "public.assignmentmaster"
+     Column     |          Type          | Modifiers 
+----------------+------------------------+-----------
+ assignmentid   | character varying(20)  | not null
+ assignmentname | character(50)          | not null
+ topicid        | character varying(20)  | 
+ question       | character varying(100) | not null
+Indexes:
+    "assignmentmaster_pkey" PRIMARY KEY, btree (assignmentid)
+Foreign-key constraints:
+    "assignmentmaster_topicid_fkey" FOREIGN KEY (topicid) REFERENCES topicmaster(topicid) ON DELETE CASCADE
+
+postgres=# insert into assignmentmaster values('a1256','Parser','T456','Some revision question');
+INSERT 0 1
+
+postgres=# select * from AssignmentMaster;
+ assignmentid |                   assignmentname                   | topicid |        question        
+--------------+----------------------------------------------------+---------+------------------------
+ a1256        | Parser                                             | T456    | Some revision question
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+AssignmentBatch
+
+postgres=# create table AssignmentBatch(assignmentID varchar(20) references assignmentmaster(assignmentid) on delete cascade,batchID varchar(20) references batchmaster(batchid) on delete cascade,assignedDate date NOT NULL,dueDate date NOT NULL);
+CREATE TABLE
+
+postgres=# \d AssignmentBatch
+          Table "public.assignmentbatch"
+    Column    |         Type          | Modifiers 
+--------------+-----------------------+-----------
+ assignmentid | character varying(20) | 
+ batchid      | character varying(20) | 
+ assigneddate | date                  | not null
+ duedate      | date                  | not null
+Foreign-key constraints:
+    "assignmentbatch_assignmentid_fkey" FOREIGN KEY (assignmentid) REFERENCES assignmentmaster(assignmentid) ON DELETE CASCADE
+    "assignmentbatch_batchid_fkey" FOREIGN KEY (batchid) REFERENCES batchmaster(batchid) ON DELETE CASCADE
+
+postgres=# insert into assignmentbatch values('a1256','A101','12/15/2018','2/12/2019');
+INSERT 0 1
+
+postgres=# select * from Assignmentbatch;
+ assignmentid | batchid | assigneddate |  duedate   
+--------------+---------+--------------+------------
+ a1256        | A101    | 2018-12-15   | 2019-02-12
+(1 row)
+
+_______________________________________________________________________________________________________________________________________________
+
+StudentAssignment
+
+postgres=# create table StudentAssignment(memberid varchar(20) references member(memberid) on delete cascade,assignmentid varchar(20) references assignmentmaster(assignmentid) on delete cascade);
+CREATE TABLE
+
+postgres=# \d StudentAssignment;
+         Table "public.studentassignment"
+    Column    |         Type          | Modifiers 
+--------------+-----------------------+-----------
+ memberid     | character varying(20) | 
+ assignmentid | character varying(20) | 
+Foreign-key constraints:
+    "studentassignment_assignmentid_fkey" FOREIGN KEY (assignmentid) REFERENCES assignmentmaster(assignmentid) ON DELETE CASCADE
+    "studentassignment_memberid_fkey" FOREIGN KEY (memberid) REFERENCES member(memberid) ON DELETE CASCADE
+
+postgres=# insert into studentassignment values('1','a1256');
+INSERT 0 1
+
+postgres=# select * from studentAssignment;
+ memberid | assignmentid 
+----------+--------------
+ 1        | a1256
+(1 row)
+
+
